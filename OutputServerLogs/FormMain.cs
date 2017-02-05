@@ -17,21 +17,34 @@ namespace OutputServerLogs
         //DataSet myDataSet = new DataSet();
         // Table used for construction
         DataTable dtComboBox = new DataTable("ComboBox");
+        DataTable dtDataGrid = new DataTable("DataGrid");
+        string strFromDir = "";
 
         public FormMain()
         {
             InitializeComponent();
-            // Set up the columns
+            // Set up the columns dtComboBox
             DataColumn lName = new DataColumn("Preset", typeof(string));
             DataColumn fromDir = new DataColumn("fromDir", typeof(string));
             DataColumn toDir = new DataColumn("toDir", typeof(string));
             DataColumn SubDir = new DataColumn("subDir", typeof(bool));
-            // converting default presets to rows
+            // adding columns in dtComboBox
             dtComboBox.Columns.Add(lName);
             dtComboBox.Columns.Add(fromDir);
             dtComboBox.Columns.Add(toDir);
             dtComboBox.Columns.Add(SubDir);
-            // see if there is xml file in current directory
+
+            // Add a button column. 
+            DataGridViewButtonColumn buttonColumn =
+                new DataGridViewButtonColumn();
+            buttonColumn.HeaderText = "Command";
+            buttonColumn.Name = "Command";
+            buttonColumn.Text = "Get Files";
+            buttonColumn.UseColumnTextForButtonValue = true;
+            // 
+            dtDataGrid.Columns.Add("SourceDir", typeof(DataGridViewTextBoxColumn));
+            dtDataGrid.Columns.Add("destDir", typeof(DataGridViewTextBoxColumn));
+            // see if there is xml file in current directory for dtComboBox
             string strTemp = System.IO.Path.GetDirectoryName(Application.ExecutablePath).ToString() + "\\presets.xml";
             if (File.Exists(strTemp))
             {
@@ -101,7 +114,7 @@ namespace OutputServerLogs
             tbToDir.Text = dtComboBox.Rows[comboBox.SelectedIndex]["toDir"].ToString();
             if((bool)dtComboBox.Rows[comboBox.SelectedIndex]["subDir"])
             {
-                // to lazy to subclass value
+                // too lazy to subclass value of Radio Button, there are just 2 of them
                 rbSubDirs.Checked = true;
                 rbPrefixName.Checked = false;
             } else
@@ -109,8 +122,17 @@ namespace OutputServerLogs
                 rbSubDirs.Checked = false;
                 rbPrefixName.Checked = true;
             }
+            if(strFromDir != tbFromDir.Text)
+            {
+                strFromDir = tbFromDir.Text;
+                newDataGrid();
+            }
         }
 
+        private void newDataGrid()
+        {
+            dtDataGrid.Clear();
+        }
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if(cbxPreset.Items.Count < 2)
