@@ -12,33 +12,41 @@ namespace OutputServerLogs
 {
     public partial class FormMain : Form
     {
-        // --- Variables
-        string[] strPresets = new string[2] { "Framework", "output" };
-
-        DataSet myDataSet = new DataSet();
-
-        // --- Preparation
-        DataTable lTable = new DataTable("Full");
-        DataColumn lName = new DataColumn("Preset", typeof(string));
-        
-
-
-
+        // Dataset for the comboBox
+        //DataSet myDataSet = new DataSet();
+        // Table used for construction
+        DataTable dtComboBox = new DataTable("ComboBox");
 
         public FormMain()
         {
             InitializeComponent();
+            // Preset Values
+            string[] strPresets = new string[2] { "Framework", "output" };
+            string[] strFromDir = new string[2] { "%appdata%\\itx", "c:\\itxLogs" };
+            string[] strToDir = new string[2] { "c:\\CollectLogs", "c:\\CollectLogs" };
+            bool[] blSubDir = new bool[2] { true, true };
+            // Don't need to keep columns
+            DataColumn lName = new DataColumn("Preset", typeof(string));
+            DataColumn fromDir = new DataColumn("fromDir", typeof(string));
+            DataColumn toDir = new DataColumn("toDir", typeof(string));
+            DataColumn SubDir = new DataColumn("subDir", typeof(bool));
             // converting default presets to rows
-            lTable.Columns.Add(lName);
+            dtComboBox.Columns.Add(lName);
+            dtComboBox.Columns.Add(fromDir);
+            dtComboBox.Columns.Add(toDir);
+            dtComboBox.Columns.Add(SubDir);
             for (int i = 0; i < strPresets.Length; i++)
             {
-                DataRow lLang = lTable.NewRow();
-                lLang["Preset"] = strPresets[i];
-                lTable.Rows.Add(lLang);
+                DataRow lRow = dtComboBox.NewRow();
+                lRow["Preset"] = strPresets[i];
+                lRow["fromDir"] = strFromDir[i];
+                lRow["toDir"] = strToDir[i];
+                lRow["subDir"] = blSubDir[i];
+                dtComboBox.Rows.Add(lRow);
             }
-            myDataSet.Tables.Add(lTable);
+            //myDataSet.Tables.Add(dtComboBox);
             // --- Handling the combobox
-            cbxPreset.DataSource = myDataSet.Tables["Full"].DefaultView;
+            cbxPreset.DataSource = dtComboBox.DefaultView;
             cbxPreset.DisplayMember = "Preset";
         }
 
@@ -48,6 +56,12 @@ namespace OutputServerLogs
             DialogResult result = myFormAdd.ShowDialog();
             if (result == DialogResult.OK)
             {
+                DataRow lRow = dtComboBox.NewRow();
+                lRow["Preset"] = myFormAdd.strPreset;
+                lRow["fromDir"] = myFormAdd.strFromDir;
+                lRow["toDir"] = myFormAdd.strToDir;
+                lRow["subDir"] = myFormAdd.blSubDir;
+                dtComboBox.Rows.Add(lRow);
                 // add code to set data source
             }
         }
@@ -64,6 +78,21 @@ namespace OutputServerLogs
 
         }
 
-
+        private void cbxPreset_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            tbFromDir.Text = dtComboBox.Rows[comboBox.SelectedIndex]["fromDir"].ToString();
+            tbToDir.Text = dtComboBox.Rows[comboBox.SelectedIndex]["toDir"].ToString();
+            if((bool)dtComboBox.Rows[comboBox.SelectedIndex]["subDir"])
+            {
+                // to lazy to subclass value
+                rbSubDirs.Checked = true;
+                rbPrefixName.Checked = false;
+            } else
+            {
+                rbSubDirs.Checked = false;
+                rbPrefixName.Checked = true;
+            }
+        }
     }
 }

@@ -17,6 +17,10 @@ namespace OutputServerLogs
         {
             InitializeComponent();
         }
+        public string strPreset { get; set; }
+        public string strFromDir { get; set; }
+        public string strToDir { get; set; }
+        public bool blSubDir { get; set; }
 
         private void btAddFromDir_Click(object sender, EventArgs e)
         {
@@ -36,6 +40,10 @@ namespace OutputServerLogs
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            strPreset = tbPresetName.Text;
+            strFromDir = tbFromDir.Text;
+            strToDir = tbToDir.Text;
+            blSubDir = rbSubDirs.Checked;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

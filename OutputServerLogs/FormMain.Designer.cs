@@ -52,29 +52,29 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 35);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(18, 67);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 13);
+            this.label1.Size = new System.Drawing.Size(153, 25);
             this.label1.TabIndex = 1;
             this.label1.Text = "From Directory";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 60);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(38, 115);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.Size = new System.Drawing.Size(129, 25);
             this.label2.TabIndex = 1;
             this.label2.Text = "To Directory";
             // 
             // btnFromDir
             // 
-            this.btnFromDir.Location = new System.Drawing.Point(270, 6);
-            this.btnFromDir.Margin = new System.Windows.Forms.Padding(2);
+            this.btnFromDir.Location = new System.Drawing.Point(540, 12);
+            this.btnFromDir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnFromDir.Name = "btnFromDir";
-            this.btnFromDir.Size = new System.Drawing.Size(35, 19);
+            this.btnFromDir.Size = new System.Drawing.Size(70, 37);
             this.btnFromDir.TabIndex = 2;
             this.btnFromDir.Text = "Add";
             this.btnFromDir.UseVisualStyleBackColor = true;
@@ -83,63 +83,65 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 86);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Location = new System.Drawing.Point(22, 165);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 13);
+            this.label3.Size = new System.Drawing.Size(101, 25);
             this.label3.TabIndex = 3;
             this.label3.Text = "Start Day";
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(66, 82);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2);
+            this.dateTimePicker1.Location = new System.Drawing.Point(132, 158);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(201, 20);
+            this.dateTimePicker1.Size = new System.Drawing.Size(398, 31);
             this.dateTimePicker1.TabIndex = 4;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(271, 86);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Location = new System.Drawing.Point(542, 165);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(127, 13);
+            this.label4.Size = new System.Drawing.Size(259, 25);
             this.label4.TabIndex = 5;
             this.label4.Text = "number of additional days";
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(402, 82);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
+            this.numericUpDown1.Location = new System.Drawing.Point(804, 158);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 31);
             this.numericUpDown1.TabIndex = 6;
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 110);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridView1.Location = new System.Drawing.Point(24, 212);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 33;
-            this.dataGridView1.Size = new System.Drawing.Size(531, 179);
+            this.dataGridView1.Size = new System.Drawing.Size(1062, 344);
             this.dataGridView1.TabIndex = 7;
             // 
             // btnZipTo
             // 
-            this.btnZipTo.Location = new System.Drawing.Point(468, 80);
+            this.btnZipTo.Location = new System.Drawing.Point(936, 154);
+            this.btnZipTo.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnZipTo.Name = "btnZipTo";
-            this.btnZipTo.Size = new System.Drawing.Size(75, 23);
+            this.btnZipTo.Size = new System.Drawing.Size(150, 44);
             this.btnZipTo.TabIndex = 8;
             this.btnZipTo.Text = "zip files now";
             this.btnZipTo.UseVisualStyleBackColor = true;
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(12, 294);
+            this.richTextBox1.Location = new System.Drawing.Point(24, 565);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(531, 101);
+            this.richTextBox1.Size = new System.Drawing.Size(1058, 191);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "";
             // 
@@ -147,26 +149,29 @@
             // 
             this.cbxPreset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxPreset.FormattingEnabled = true;
-            this.cbxPreset.Location = new System.Drawing.Point(92, 6);
-            this.cbxPreset.Margin = new System.Windows.Forms.Padding(2);
+            this.cbxPreset.Location = new System.Drawing.Point(184, 12);
+            this.cbxPreset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbxPreset.Name = "cbxPreset";
-            this.cbxPreset.Size = new System.Drawing.Size(174, 21);
+            this.cbxPreset.Size = new System.Drawing.Size(344, 33);
             this.cbxPreset.TabIndex = 0;
+            this.cbxPreset.SelectedIndexChanged += new System.EventHandler(this.cbxPreset_SelectedIndexChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(47, 9);
+            this.label6.Location = new System.Drawing.Point(94, 17);
+            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(37, 13);
+            this.label6.Size = new System.Drawing.Size(74, 25);
             this.label6.TabIndex = 11;
             this.label6.Text = "Preset";
             // 
             // tbFromDir
             // 
-            this.tbFromDir.Location = new System.Drawing.Point(92, 32);
+            this.tbFromDir.Location = new System.Drawing.Point(184, 62);
+            this.tbFromDir.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tbFromDir.Name = "tbFromDir";
-            this.tbFromDir.Size = new System.Drawing.Size(451, 20);
+            this.tbFromDir.Size = new System.Drawing.Size(898, 31);
             this.tbFromDir.TabIndex = 12;
             // 
             // rbSubDirs
@@ -174,9 +179,10 @@
             this.rbSubDirs.AutoSize = true;
             this.rbSubDirs.Checked = true;
             this.rbSubDirs.Enabled = false;
-            this.rbSubDirs.Location = new System.Drawing.Point(349, 7);
+            this.rbSubDirs.Location = new System.Drawing.Point(698, 13);
+            this.rbSubDirs.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.rbSubDirs.Name = "rbSubDirs";
-            this.rbSubDirs.Size = new System.Drawing.Size(90, 17);
+            this.rbSubDirs.Size = new System.Drawing.Size(177, 29);
             this.rbSubDirs.TabIndex = 13;
             this.rbSubDirs.TabStop = true;
             this.rbSubDirs.Text = "make sub dirs";
@@ -186,27 +192,29 @@
             // 
             this.rbPrefixName.AutoSize = true;
             this.rbPrefixName.Enabled = false;
-            this.rbPrefixName.Location = new System.Drawing.Point(445, 7);
+            this.rbPrefixName.Location = new System.Drawing.Point(890, 13);
+            this.rbPrefixName.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.rbPrefixName.Name = "rbPrefixName";
-            this.rbPrefixName.Size = new System.Drawing.Size(98, 17);
+            this.rbPrefixName.Size = new System.Drawing.Size(195, 29);
             this.rbPrefixName.TabIndex = 13;
             this.rbPrefixName.Text = "just prefix name";
             this.rbPrefixName.UseVisualStyleBackColor = true;
             // 
             // tbToDir
             // 
-            this.tbToDir.Location = new System.Drawing.Point(92, 57);
+            this.tbToDir.Location = new System.Drawing.Point(184, 110);
+            this.tbToDir.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tbToDir.Name = "tbToDir";
-            this.tbToDir.Size = new System.Drawing.Size(451, 20);
+            this.tbToDir.Size = new System.Drawing.Size(898, 31);
             this.tbToDir.TabIndex = 12;
             // 
             // btnDelete
             // 
             this.btnDelete.Enabled = false;
-            this.btnDelete.Location = new System.Drawing.Point(309, 6);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDelete.Location = new System.Drawing.Point(618, 12);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(35, 19);
+            this.btnDelete.Size = new System.Drawing.Size(70, 37);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Del";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -214,9 +222,9 @@
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(562, 407);
+            this.ClientSize = new System.Drawing.Size(1124, 783);
             this.Controls.Add(this.rbPrefixName);
             this.Controls.Add(this.rbSubDirs);
             this.Controls.Add(this.tbToDir);
@@ -234,7 +242,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbxPreset);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormMain";
             this.Text = "Collect Output Server Logs";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
