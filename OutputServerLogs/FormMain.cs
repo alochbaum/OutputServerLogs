@@ -36,9 +36,12 @@ namespace OutputServerLogs
             if (File.Exists(strTemp))
             {
                 dtComboBox.ReadXml(strTemp);
+                writeLog("Read Presets: " + strTemp);
             } // end load default presets
             else
             {
+                writeLog("Didn't Find: " + strTemp,"Red");
+                writeLog("Loading Default Presets","Green");
                 // Load Default Preset Values
                 string[] strPresets = new string[2] { "Framework", "output" };
                 string[] strFromDir = new string[2] { "%appdata%\\itx", "c:\\itxLogs" };
@@ -72,6 +75,7 @@ namespace OutputServerLogs
                 lRow["toDir"] = myFormAdd.strToDir;
                 lRow["subDir"] = myFormAdd.blSubDir;
                 dtComboBox.Rows.Add(lRow);
+                writeLog("Added Preset: " +myFormAdd.strPreset);
                 // this becomes new last row, but it isn't selected
                 cbxPreset.SelectedIndex = cbxPreset.Items.Count - 1;
             }
@@ -92,6 +96,7 @@ namespace OutputServerLogs
         private void cbxPreset_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
+            writeLog("Changing to Preset: " + dtComboBox.Rows[comboBox.SelectedIndex]["Preset"]);
             tbFromDir.Text = dtComboBox.Rows[comboBox.SelectedIndex]["fromDir"].ToString();
             tbToDir.Text = dtComboBox.Rows[comboBox.SelectedIndex]["toDir"].ToString();
             if((bool)dtComboBox.Rows[comboBox.SelectedIndex]["subDir"])
@@ -110,12 +115,23 @@ namespace OutputServerLogs
         {
             if(cbxPreset.Items.Count < 2)
             {
-                MessageBox.Show("You can't delete last preset, you must add one first");
+                writeLog("You can't delete last preset, you must add one first","Red");
             }
             else
             {
+                writeLog("Deleting Preset: " + dtComboBox.Rows[cbxPreset.SelectedIndex].ToString(), "Green");
                 dtComboBox.Rows[cbxPreset.SelectedIndex].Delete();
+
             }
+        }
+        private void writeLog(string strIn,string strStyle = "Black")
+        {
+            if (strStyle == "Red") { richTextBox1.ForeColor = Color.Red; }
+            else if (strStyle == "Green") { richTextBox1.ForeColor = Color.Green; }
+            else { richTextBox1.ForeColor = Color.Black; }
+            //strIn += DateTime.Now.ToString() + strIn ;
+            richTextBox1.AppendText(DateTime.Now.ToString() + " " + strIn + "\r\n");
+            richTextBox1.ScrollToCaret();
         }
     }
 }
