@@ -63,9 +63,10 @@ namespace OutputServerLogs
                 writeLog("Didn't Find: " + strTemp,"Red");
                 writeLog("Loading Default Presets","Green");
                 // Load Default Preset Values
-                string[] strPresets = new string[2] { "Framework", "output" };
-                string[] strFromDir = new string[2] { "%appdata%\\itx", "c:\\itxLogs" };
-                string[] strToDir = new string[2] { "c:\\CollectLogs", "c:\\CollectLogs" };
+                string[] strPresets = new string[2] { "AsRun", "Trace" };
+                string[] strFromDir = new string[2] { "E:\\AsRun", "E:\\itxlogs" };
+                string[] strToDir = new string[2] { "\\\\localhost\\c$\\Users\\Andre\\Desktop\\AsRunLogs",
+                    "\\\\localhost\\c$\\Users\\Andre\\Desktop\\TraceLogs" };
                 bool[] blSubDir = new bool[2] { true, true };
                 for (int i = 0; i < strPresets.Length; i++)
                 {
@@ -142,11 +143,13 @@ namespace OutputServerLogs
             // Load Default Preset Values
             string[] strSDir = new string[2] { "Straight to the source", "Source1" };
             string[] strDDir = new string[2] { "testing123", "123testing" };
-            for (int i = 0; i < strSDir.Length; i++)
+            int iIndex = cbxPreset.SelectedIndex;
+            foreach (string sDir in GetSubdirectoriesContainingOnlyFiles(dtComboBox.Rows[iIndex][1].ToString()))
             {
                 DataRow DGRow = dtDataGrid.NewRow();
-                DGRow["sourceDir"] = strSDir[i];
-                DGRow["destDir"] = strDDir[i];;
+                DGRow["sourceDir"] = sDir;
+                // in dtComboBox 0 is preset name 1 is fromDir and 2 is toDir
+                DGRow["destDir"] = dtComboBox.Rows[cbxPreset.SelectedIndex][2];
                 dtDataGrid.Rows.Add(DGRow);
             }
         }
@@ -171,6 +174,13 @@ namespace OutputServerLogs
             //strIn += DateTime.Now.ToString() + strIn ;
             richTextBox1.AppendText(DateTime.Now.ToString() + " " + strIn + "\r\n");
             richTextBox1.ScrollToCaret();
+        }
+
+        static IEnumerable<string> GetSubdirectoriesContainingOnlyFiles(string path)
+        {
+            return from subdirectory in Directory.GetDirectories(path, "*", SearchOption.AllDirectories)
+                   where Directory.GetDirectories(subdirectory).Length == 0
+                   select subdirectory;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

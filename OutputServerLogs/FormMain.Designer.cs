@@ -121,7 +121,9 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 110);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 33;
             this.dataGridView1.Size = new System.Drawing.Size(531, 179);
             this.dataGridView1.TabIndex = 7;
@@ -254,7 +256,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnZipTo;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.ComboBox cbxPreset;
@@ -264,6 +265,7 @@
         private System.Windows.Forms.RadioButton rbPrefixName;
         private System.Windows.Forms.TextBox tbToDir;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
