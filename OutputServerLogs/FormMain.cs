@@ -213,58 +213,47 @@ namespace OutputServerLogs
             if (dataGridView1.Columns[e.ColumnIndex].Name == "Command")
             {
                 int irow = e.RowIndex;
-                int icol = e.ColumnIndex;
-                writeLog("Button Column Clicked in row "+ irow.ToString(), "Red");
-                copyDeFiles(irow);
+                writeLog("Dest Directory: " + dtDataGrid.Rows[irow][1].ToString(), "Green");
+                int i = 0;
+                DateTime dtmWorking = dateTimePicker1.Value;
+                string strWorkingSource = dtDataGrid.Rows[irow][0].ToString();
+                string strWorkingDest = dtDataGrid.Rows[irow][1].ToString();
+                do
+                {
+                    // so far we do the following types
+                    processDeCopies(dtmWorking.ToString("yyyyMMdd") + ".CSV", irow);
+                    processDeCopies(dtmWorking.ToString("yyyyMMdd") + ".LOG", irow);
+                    processDeCopies("DAY_" + dtmWorking.ToString("dd") + ".txt", irow);
+                    // add a day for next loop
+                    dtmWorking = dtmWorking.AddDays(1);
+                } while (i++ < numericUpDown1.Value);
             }
         }
-        // this function takes in row of table and looks for all the file types that matches then copies them to dest folder 
-        private void copyDeFiles(int irow)
+
+        // Since we do the check for the same type of files each time, why bother
+        private void processDeCopies(string strCheckFile, int iRow)
         {
-            writeLog("Dest Directory: " + dtDataGrid.Rows[irow][1].ToString(), "Green");
-            int i = 0;
-            DateTime dtmWorking = dateTimePicker1.Value;
-            string strWorkingSource = dtDataGrid.Rows[irow][0].ToString();
-            string strWorkingDest = dtDataGrid.Rows[irow][1].ToString();
-            do
+            string strWorkingSource = dtDataGrid.Rows[iRow][0].ToString();
+            string strWorkingDest = dtDataGrid.Rows[iRow][1].ToString();
+            if (File.Exists(strWorkingSource + "\\" + strCheckFile))
             {
-                if (File.Exists(strWorkingSource + "\\" + dtmWorking.ToString("yyyyMMdd") + ".CSV"))
+                // create directory if doesn't exist
+                System.IO.Directory.CreateDirectory(strWorkingDest);
+                // if sub directories copy file with no name change
+                if (rbSubDirs.Checked) File.Copy(strWorkingSource + "\\" + strCheckFile,
+                     strWorkingDest + "\\" + strCheckFile, true);
+                else
                 {
-                    // create directory if doesn't exist
-                    System.IO.Directory.CreateDirectory(strWorkingDest);
-                    // if sub directories copy file with no name change
-                    if (rbSubDirs.Checked) File.Copy(strWorkingSource + "\\" + dtmWorking.ToString("yyyyMMdd") + ".CSV",
-                         strWorkingDest + "\\" +dtmWorking.ToString("yyyyMMdd") + ".CSV", true);
-                    else
-                    {
-                        int iIndex = strWorkingSource.LastIndexOf("\\");
-                        File.Copy(strWorkingSource + "\\" + dtmWorking.ToString("yyyyMMdd") + ".CSV",
-                        strWorkingDest + strWorkingSource.Substring(iIndex, strWorkingSource.Length - iIndex) + "_" + dtmWorking.ToString("yyyyMMdd") + ".CSV",
-                        true);
-                    }
-                    writeLog("Copying " + strWorkingSource + "\\" + dtmWorking.ToString("yyyyMMdd") + ".CSV", "Green");
+                    int iIndex = strWorkingSource.LastIndexOf("\\");
+                    File.Copy(strWorkingSource + "\\" + strCheckFile,
+                    strWorkingDest + strWorkingSource.Substring(iIndex, strWorkingSource.Length - iIndex) + "_" + strCheckFile,
+                    true);
                 }
-                if (File.Exists(strWorkingSource + "\\DAY_" + dtmWorking.ToString("dd") + ".txt"))
-                {
-                    // create directory if doesn't exist
-                    System.IO.Directory.CreateDirectory(strWorkingDest);
-                    // if sub directories copy file with no name change
-                    if (rbSubDirs.Checked) File.Copy(strWorkingSource + "\\DAY_" + dtmWorking.ToString("dd") + ".txt",
-                         strWorkingDest + "\\DAY_" + dtmWorking.ToString("dd") + ".txt", true);
-                    else
-                    {
-                        int iIndex = strWorkingSource.LastIndexOf("\\");
-                        File.Copy(strWorkingSource + "\\DAY_" + dtmWorking.ToString("dd") + ".txt",
-                        strWorkingDest + strWorkingSource.Substring(iIndex, strWorkingSource.Length - iIndex) + "_DAY_" + dtmWorking.ToString("dd") + ".txt",
-                        true);
-                    }
-                    writeLog("Copying "+ strWorkingSource + "\\DAY_" + dtmWorking.ToString("dd") + ".txt","Green");
-                }
-                //writeLog(dtmWorking.ToString("yyyyMMdd")+" "+i.ToString(), "Red");
-                // add a day for next loop
-                dtmWorking = dtmWorking.AddDays(1);
-            } while (i++ < numericUpDown1.Value);
-            
+                writeLog("Copying " + strWorkingSource + "\\" + strCheckFile, "Green");
+            } else
+            {
+                writeLog("Didn't find source file: " + strWorkingSource + "\\" + strCheckFile, "Red");
+            }
 
         }
 
