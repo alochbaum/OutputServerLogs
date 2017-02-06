@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,6 @@ namespace OutputServerLogs
         DataTable dtComboBox = new DataTable("ComboBox");
         DataTable dtDataGrid = new DataTable("DataGrid");
         BindingSource SBind = new BindingSource();
-        string strFromDir = "";
 
         public FormMain()
         {
@@ -35,21 +35,28 @@ namespace OutputServerLogs
             dtComboBox.Columns.Add(toDir);
             dtComboBox.Columns.Add(SubDir);
 
-            //// Add a button column. 
-            //DataGridViewButtonColumn buttonColumn =
-            //    new DataGridViewButtonColumn();
-            //buttonColumn.HeaderText = "Command";
-            //buttonColumn.Name = "Command";
-            //buttonColumn.Text = "Get Files";
-            //buttonColumn.UseColumnTextForButtonValue = true;
+
             // setting up columns in dtDataGrid
             DataColumn sourceDir = new DataColumn("sourceDir", typeof(string));
             DataColumn destDir = new DataColumn("destDir", typeof(string));
             dtDataGrid.Columns.Add(sourceDir);
             dtDataGrid.Columns.Add(destDir);
+
             // setting binding and columns in datagrid
             SBind.DataSource = dtDataGrid;
             dataGridView1.DataSource = SBind;
+
+            // Add a button column. 
+            DataGridViewButtonColumn buttonColumn =
+                new DataGridViewButtonColumn();
+            buttonColumn.HeaderText = "Command";
+            buttonColumn.Name = "Command";
+            buttonColumn.Text = "Get Files";
+            buttonColumn.UseColumnTextForButtonValue = true;
+            dataGridView1.Columns.Add(buttonColumn);
+
+            // making the middle column fill space
+            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             // see if there is xml file in current directory for dtComboBox
             string strTemp = System.IO.Path.GetDirectoryName(Application.ExecutablePath).ToString() + "\\presets.xml";
@@ -65,8 +72,7 @@ namespace OutputServerLogs
                 // Load Default Preset Values
                 string[] strPresets = new string[2] { "AsRun", "Trace" };
                 string[] strFromDir = new string[2] { "E:\\AsRun", "E:\\itxlogs" };
-                string[] strToDir = new string[2] { "\\\\localhost\\c$\\Users\\Andre\\Desktop\\AsRunLogs",
-                    "\\\\localhost\\c$\\Users\\Andre\\Desktop\\TraceLogs" };
+                string[] strToDir = new string[2] { "E:\\AsRunLogs", "E:\\TraceLogs" };
                 bool[] blSubDir = new bool[2] { true, true };
                 for (int i = 0; i < strPresets.Length; i++)
                 {
@@ -82,6 +88,9 @@ namespace OutputServerLogs
             // --- Handling the combobox
             cbxPreset.DataSource = dtComboBox.DefaultView;
             cbxPreset.DisplayMember = "Preset";
+
+            string version = Application.ProductVersion;
+            this.Text = String.Format("Collect Multi-Directory iTX Logs vrs {0}", version);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -130,27 +139,42 @@ namespace OutputServerLogs
                 rbSubDirs.Checked = false;
                 rbPrefixName.Checked = true;
             }
-            if(strFromDir != tbFromDir.Text)
-            {
-                strFromDir = tbFromDir.Text;
-                newDataGrid();
-            }
+            // redraw the grid
+            newDataGrid();
+
         }
 
         private void newDataGrid()
         {
             dtDataGrid.Clear();
-            // Load Default Preset Values
-            string[] strSDir = new string[2] { "Straight to the source", "Source1" };
-            string[] strDDir = new string[2] { "testing123", "123testing" };
             int iIndex = cbxPreset.SelectedIndex;
-            foreach (string sDir in GetSubdirectoriesContainingOnlyFiles(dtComboBox.Rows[iIndex][1].ToString()))
+            string strScanDir = dtComboBox.Rows[iIndex][1].ToString();
+            if (Directory.Exists(strScanDir))
             {
-                DataRow DGRow = dtDataGrid.NewRow();
-                DGRow["sourceDir"] = sDir;
-                // in dtComboBox 0 is preset name 1 is fromDir and 2 is toDir
-                DGRow["destDir"] = dtComboBox.Rows[cbxPreset.SelectedIndex][2];
-                dtDataGrid.Rows.Add(DGRow);
+                // fill in datagrid with sub directory names
+                writeLog("Scanning " + strScanDir + " directory for sub directories.");
+                foreach (string sDir in GetSubdirectoriesContainingOnlyFiles(strScanDir))
+                {
+                    DataRow DGRow = dtDataGrid.NewRow();
+                    DGRow["sourceDir"] = sDir;
+                    // in dtComboBox 0 is preset name 1 is fromDir and 2 is toDir
+
+                    //Compute sub directory if needed
+                    if (rbSubDirs.Checked)
+                    {
+                        int i = sDir.LastIndexOf("\\");
+                        DGRow["destDir"] = dtComboBox.Rows[cbxPreset.SelectedIndex][2] + sDir.Substring(i, sDir.Length - i);
+                    }
+                    else
+                    {
+                        DGRow["destDir"] = dtComboBox.Rows[cbxPreset.SelectedIndex][2];
+                    }
+                    dtDataGrid.Rows.Add(DGRow);
+                }
+                dataGridView1.AutoResizeColumns();
+            } else
+            {
+                writeLog("Didn't find a directory named: " + strScanDir + " to get sub directories.", "Red");
             }
         }
         private void btnDelete_Click(object sender, EventArgs e)
@@ -168,9 +192,10 @@ namespace OutputServerLogs
         }
         private void writeLog(string strIn,string strStyle = "Black")
         {
-            if (strStyle == "Red") { richTextBox1.ForeColor = Color.Red; }
-            else if (strStyle == "Green") { richTextBox1.ForeColor = Color.Green; }
-            else { richTextBox1.ForeColor = Color.Black; }
+            // if you use ForeColor it changes whole thing
+            if (strStyle == "Red") { richTextBox1.SelectionColor = Color.Red; }
+            else if (strStyle == "Green") { richTextBox1.SelectionColor = Color.Green; }
+            else { richTextBox1.SelectionColor = Color.Black; }
             //strIn += DateTime.Now.ToString() + strIn ;
             richTextBox1.AppendText(DateTime.Now.ToString() + " " + strIn + "\r\n");
             richTextBox1.ScrollToCaret();
@@ -185,7 +210,97 @@ namespace OutputServerLogs
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Command")
+            {
+                int irow = e.RowIndex;
+                int icol = e.ColumnIndex;
+                writeLog("Button Column Clicked in row "+ irow.ToString(), "Red");
+                copyDeFiles(irow);
+            }
+        }
+        // this function takes in row of table and looks for all the file types that matches then copies them to dest folder 
+        private void copyDeFiles(int irow)
+        {
+            writeLog("Dest Directory: " + dtDataGrid.Rows[irow][1].ToString(), "Green");
+            int i = 0;
+            DateTime dtmWorking = dateTimePicker1.Value;
+            string strWorkingSource = dtDataGrid.Rows[irow][0].ToString();
+            string strWorkingDest = dtDataGrid.Rows[irow][1].ToString();
+            do
+            {
+                if (File.Exists(strWorkingSource + "\\" + dtmWorking.ToString("yyyyMMdd") + ".CSV"))
+                {
+                    // create directory if doesn't exist
+                    System.IO.Directory.CreateDirectory(strWorkingDest);
+                    // if sub directories copy file with no name change
+                    if (rbSubDirs.Checked) File.Copy(strWorkingSource + "\\" + dtmWorking.ToString("yyyyMMdd") + ".CSV",
+                         strWorkingDest + "\\" +dtmWorking.ToString("yyyyMMdd") + ".CSV", true);
+                    else
+                    {
+                        int iIndex = strWorkingSource.LastIndexOf("\\");
+                        File.Copy(strWorkingSource + "\\" + dtmWorking.ToString("yyyyMMdd") + ".CSV",
+                        strWorkingDest + strWorkingSource.Substring(iIndex, strWorkingSource.Length - iIndex) + "_" + dtmWorking.ToString("yyyyMMdd") + ".CSV",
+                        true);
+                    }
+                    writeLog("Copying " + strWorkingSource + "\\" + dtmWorking.ToString("yyyyMMdd") + ".CSV", "Green");
+                }
+                if (File.Exists(strWorkingSource + "\\DAY_" + dtmWorking.ToString("dd") + ".txt"))
+                {
+                    // create directory if doesn't exist
+                    System.IO.Directory.CreateDirectory(strWorkingDest);
+                    // if sub directories copy file with no name change
+                    if (rbSubDirs.Checked) File.Copy(strWorkingSource + "\\DAY_" + dtmWorking.ToString("dd") + ".txt",
+                         strWorkingDest + "\\DAY_" + dtmWorking.ToString("dd") + ".txt", true);
+                    else
+                    {
+                        int iIndex = strWorkingSource.LastIndexOf("\\");
+                        File.Copy(strWorkingSource + "\\DAY_" + dtmWorking.ToString("dd") + ".txt",
+                        strWorkingDest + strWorkingSource.Substring(iIndex, strWorkingSource.Length - iIndex) + "_DAY_" + dtmWorking.ToString("dd") + ".txt",
+                        true);
+                    }
+                    writeLog("Copying "+ strWorkingSource + "\\DAY_" + dtmWorking.ToString("dd") + ".txt","Green");
+                }
+                //writeLog(dtmWorking.ToString("yyyyMMdd")+" "+i.ToString(), "Red");
+                // add a day for next loop
+                dtmWorking = dtmWorking.AddDays(1);
+            } while (i++ < numericUpDown1.Value);
+            
 
+        }
+
+        private void btnZipTo_Click(object sender, EventArgs e)
+        {
+            writeLog("Zipping " + tbToDir.Text + " to " + tbToDir.Text + ".zip", "Green");
+            File.Delete(tbToDir.Text + ".zip");
+
+            CompressDirectory(tbToDir.Text, tbToDir.Text + ".zip");
+        }
+        static void CompressDirectory(string sInDir, string sOutFile)
+        {
+            string[] sFiles = Directory.GetFiles(sInDir, "*.*", SearchOption.AllDirectories);
+            int iDirLen = sInDir[sInDir.Length - 1] == Path.DirectorySeparatorChar ? sInDir.Length : sInDir.Length + 1;
+
+            using (FileStream outFile = new FileStream(sOutFile, FileMode.Create, FileAccess.Write, FileShare.None))
+            using (GZipStream str = new GZipStream(outFile, CompressionMode.Compress))
+                foreach (string sFilePath in sFiles)
+                {
+                    string sRelativePath = sFilePath.Substring(iDirLen);
+                    CompressFile(sInDir, sRelativePath, str);
+                }
+        }
+
+        static void CompressFile(string sDir, string sRelativePath, GZipStream zipStream)
+        {
+            //Compress file name
+            char[] chars = sRelativePath.ToCharArray();
+            zipStream.Write(BitConverter.GetBytes(chars.Length), 0, sizeof(int));
+            foreach (char c in chars)
+                zipStream.Write(BitConverter.GetBytes(c), 0, sizeof(char));
+
+            //Compress file content
+            byte[] bytes = File.ReadAllBytes(Path.Combine(sDir, sRelativePath));
+            zipStream.Write(BitConverter.GetBytes(bytes.Length), 0, sizeof(int));
+            zipStream.Write(bytes, 0, bytes.Length);
         }
     }
 }

@@ -71,12 +71,12 @@
             // 
             // btnFromDir
             // 
-            this.btnFromDir.Location = new System.Drawing.Point(270, 6);
+            this.btnFromDir.Location = new System.Drawing.Point(274, 6);
             this.btnFromDir.Margin = new System.Windows.Forms.Padding(2);
             this.btnFromDir.Name = "btnFromDir";
-            this.btnFromDir.Size = new System.Drawing.Size(35, 19);
+            this.btnFromDir.Size = new System.Drawing.Size(76, 19);
             this.btnFromDir.TabIndex = 2;
-            this.btnFromDir.Text = "Add";
+            this.btnFromDir.Text = "Add a Preset";
             this.btnFromDir.UseVisualStyleBackColor = true;
             this.btnFromDir.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -125,23 +125,25 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 33;
-            this.dataGridView1.Size = new System.Drawing.Size(531, 179);
+            this.dataGridView1.Size = new System.Drawing.Size(674, 179);
             this.dataGridView1.TabIndex = 7;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // btnZipTo
             // 
-            this.btnZipTo.Location = new System.Drawing.Point(468, 80);
+            this.btnZipTo.Location = new System.Drawing.Point(479, 81);
             this.btnZipTo.Name = "btnZipTo";
-            this.btnZipTo.Size = new System.Drawing.Size(75, 23);
+            this.btnZipTo.Size = new System.Drawing.Size(206, 23);
             this.btnZipTo.TabIndex = 8;
-            this.btnZipTo.Text = "zip files now";
+            this.btnZipTo.Text = "Zip then save the root \"to\" directory";
             this.btnZipTo.UseVisualStyleBackColor = true;
+            this.btnZipTo.Click += new System.EventHandler(this.btnZipTo_Click);
             // 
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(12, 294);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(531, 101);
+            this.richTextBox1.Size = new System.Drawing.Size(674, 101);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "";
             // 
@@ -169,7 +171,7 @@
             // 
             this.tbFromDir.Location = new System.Drawing.Point(92, 32);
             this.tbFromDir.Name = "tbFromDir";
-            this.tbFromDir.Size = new System.Drawing.Size(451, 20);
+            this.tbFromDir.Size = new System.Drawing.Size(593, 20);
             this.tbFromDir.TabIndex = 12;
             // 
             // rbSubDirs
@@ -177,9 +179,9 @@
             this.rbSubDirs.AutoSize = true;
             this.rbSubDirs.Checked = true;
             this.rbSubDirs.Enabled = false;
-            this.rbSubDirs.Location = new System.Drawing.Point(349, 7);
+            this.rbSubDirs.Location = new System.Drawing.Point(491, 5);
             this.rbSubDirs.Name = "rbSubDirs";
-            this.rbSubDirs.Size = new System.Drawing.Size(103, 26);
+            this.rbSubDirs.Size = new System.Drawing.Size(90, 17);
             this.rbSubDirs.TabIndex = 13;
             this.rbSubDirs.TabStop = true;
             this.rbSubDirs.Text = "make sub dirs";
@@ -189,9 +191,9 @@
             // 
             this.rbPrefixName.AutoSize = true;
             this.rbPrefixName.Enabled = false;
-            this.rbPrefixName.Location = new System.Drawing.Point(445, 7);
+            this.rbPrefixName.Location = new System.Drawing.Point(587, 5);
             this.rbPrefixName.Name = "rbPrefixName";
-            this.rbPrefixName.Size = new System.Drawing.Size(111, 26);
+            this.rbPrefixName.Size = new System.Drawing.Size(98, 17);
             this.rbPrefixName.TabIndex = 13;
             this.rbPrefixName.Text = "just prefix name";
             this.rbPrefixName.UseVisualStyleBackColor = true;
@@ -200,17 +202,17 @@
             // 
             this.tbToDir.Location = new System.Drawing.Point(92, 57);
             this.tbToDir.Name = "tbToDir";
-            this.tbToDir.Size = new System.Drawing.Size(451, 20);
+            this.tbToDir.Size = new System.Drawing.Size(593, 20);
             this.tbToDir.TabIndex = 12;
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(309, 6);
+            this.btnDelete.Location = new System.Drawing.Point(355, 6);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(35, 19);
+            this.btnDelete.Size = new System.Drawing.Size(131, 19);
             this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "Del";
+            this.btnDelete.Text = "Delete Selected Preset";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -218,7 +220,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(562, 407);
+            this.ClientSize = new System.Drawing.Size(697, 407);
             this.Controls.Add(this.rbPrefixName);
             this.Controls.Add(this.rbSubDirs);
             this.Controls.Add(this.tbToDir);
@@ -238,7 +240,7 @@
             this.Controls.Add(this.cbxPreset);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormMain";
-            this.Text = "Collect Output Server Logs";
+            this.Text = "Collect Multi-Directory iTX Logs";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
