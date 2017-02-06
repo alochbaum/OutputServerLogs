@@ -72,7 +72,7 @@
             // btnFromDir
             // 
             this.btnFromDir.Location = new System.Drawing.Point(270, 6);
-            this.btnFromDir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnFromDir.Margin = new System.Windows.Forms.Padding(2);
             this.btnFromDir.Name = "btnFromDir";
             this.btnFromDir.Size = new System.Drawing.Size(35, 19);
             this.btnFromDir.TabIndex = 2;
@@ -93,7 +93,7 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Location = new System.Drawing.Point(66, 82);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(201, 20);
             this.dateTimePicker1.TabIndex = 4;
@@ -111,7 +111,7 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(402, 82);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(60, 20);
             this.numericUpDown1.TabIndex = 6;
@@ -120,7 +120,7 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 110);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 33;
             this.dataGridView1.Size = new System.Drawing.Size(531, 179);
@@ -148,7 +148,7 @@
             this.cbxPreset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxPreset.FormattingEnabled = true;
             this.cbxPreset.Location = new System.Drawing.Point(92, 6);
-            this.cbxPreset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbxPreset.Margin = new System.Windows.Forms.Padding(2);
             this.cbxPreset.Name = "cbxPreset";
             this.cbxPreset.Size = new System.Drawing.Size(174, 21);
             this.cbxPreset.TabIndex = 0;
@@ -177,7 +177,7 @@
             this.rbSubDirs.Enabled = false;
             this.rbSubDirs.Location = new System.Drawing.Point(349, 7);
             this.rbSubDirs.Name = "rbSubDirs";
-            this.rbSubDirs.Size = new System.Drawing.Size(90, 17);
+            this.rbSubDirs.Size = new System.Drawing.Size(103, 26);
             this.rbSubDirs.TabIndex = 13;
             this.rbSubDirs.TabStop = true;
             this.rbSubDirs.Text = "make sub dirs";
@@ -189,7 +189,7 @@
             this.rbPrefixName.Enabled = false;
             this.rbPrefixName.Location = new System.Drawing.Point(445, 7);
             this.rbPrefixName.Name = "rbPrefixName";
-            this.rbPrefixName.Size = new System.Drawing.Size(98, 17);
+            this.rbPrefixName.Size = new System.Drawing.Size(111, 26);
             this.rbPrefixName.TabIndex = 13;
             this.rbPrefixName.Text = "just prefix name";
             this.rbPrefixName.UseVisualStyleBackColor = true;
@@ -204,7 +204,7 @@
             // btnDelete
             // 
             this.btnDelete.Location = new System.Drawing.Point(309, 6);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(35, 19);
             this.btnDelete.TabIndex = 2;
@@ -234,7 +234,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbxPreset);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormMain";
             this.Text = "Collect Output Server Logs";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);

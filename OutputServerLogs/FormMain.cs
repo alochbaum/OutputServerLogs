@@ -18,6 +18,7 @@ namespace OutputServerLogs
         // Table used for construction
         DataTable dtComboBox = new DataTable("ComboBox");
         DataTable dtDataGrid = new DataTable("DataGrid");
+        BindingSource SBind = new BindingSource();
         string strFromDir = "";
 
         public FormMain()
@@ -34,16 +35,22 @@ namespace OutputServerLogs
             dtComboBox.Columns.Add(toDir);
             dtComboBox.Columns.Add(SubDir);
 
-            // Add a button column. 
-            DataGridViewButtonColumn buttonColumn =
-                new DataGridViewButtonColumn();
-            buttonColumn.HeaderText = "Command";
-            buttonColumn.Name = "Command";
-            buttonColumn.Text = "Get Files";
-            buttonColumn.UseColumnTextForButtonValue = true;
-            // 
-            dtDataGrid.Columns.Add("SourceDir", typeof(DataGridViewTextBoxColumn));
-            dtDataGrid.Columns.Add("destDir", typeof(DataGridViewTextBoxColumn));
+            //// Add a button column. 
+            //DataGridViewButtonColumn buttonColumn =
+            //    new DataGridViewButtonColumn();
+            //buttonColumn.HeaderText = "Command";
+            //buttonColumn.Name = "Command";
+            //buttonColumn.Text = "Get Files";
+            //buttonColumn.UseColumnTextForButtonValue = true;
+            // setting up columns in dtDataGrid
+            DataColumn sourceDir = new DataColumn("sourceDir", typeof(string));
+            DataColumn destDir = new DataColumn("destDir", typeof(string));
+            dtDataGrid.Columns.Add(sourceDir);
+            dtDataGrid.Columns.Add(destDir);
+            // setting binding and columns in datagrid
+            SBind.DataSource = dtDataGrid;
+            dataGridView1.DataSource = SBind;
+
             // see if there is xml file in current directory for dtComboBox
             string strTemp = System.IO.Path.GetDirectoryName(Application.ExecutablePath).ToString() + "\\presets.xml";
             if (File.Exists(strTemp))
@@ -132,6 +139,16 @@ namespace OutputServerLogs
         private void newDataGrid()
         {
             dtDataGrid.Clear();
+            // Load Default Preset Values
+            string[] strSDir = new string[2] { "Straight to the source", "Source1" };
+            string[] strDDir = new string[2] { "testing123", "123testing" };
+            for (int i = 0; i < strSDir.Length; i++)
+            {
+                DataRow DGRow = dtDataGrid.NewRow();
+                DGRow["sourceDir"] = strSDir[i];
+                DGRow["destDir"] = strDDir[i];;
+                dtDataGrid.Rows.Add(DGRow);
+            }
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -154,6 +171,11 @@ namespace OutputServerLogs
             //strIn += DateTime.Now.ToString() + strIn ;
             richTextBox1.AppendText(DateTime.Now.ToString() + " " + strIn + "\r\n");
             richTextBox1.ScrollToCaret();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
