@@ -56,7 +56,7 @@ namespace OutputServerLogs
             buttonColumn.UseColumnTextForButtonValue = true;
             dataGridView1.Columns.Add(buttonColumn);
 
-            // making the middle column fill space
+            // making the middle column fill space for grid
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             // see if there is xml file in current directory for dtComboBox
